@@ -22,11 +22,27 @@ horizon_package_state: "latest"
 horizon_pip_package_state: "latest"
 
 ## Toggle developer mode
-horizon_developer_mode: false
+horizon_developer_mode: True
 
-## The git source/branch for Horizon
-horizon_git_repo: https://git.openstack.org/openstack/horizon
-horizon_git_install_branch: stable/ocata
+## The git source/branch for B3LAB Horizon
+horizon_git_repo: https://github.com/b3lab/horizon
+horizon_git_install_branch: b3labregister/ocata
+
+## The git source/branch for the B3LAB Safir Monitor Dashboard plugin
+safir_monitor_dashboard_git_repo: https://github.com/b3lab/safir_monitor_dashboard
+safir_monitor_dashboard_git_install_branch: gnocchi_backend
+
+## The git source/branch for the B3LAB Safir Openstack User Manager
+safir_openstack_user_manager_git_repo: https://github.com/b3lab/safir_openstack_user_manager
+safir_openstack_user_manager_git_install_branch: master
+
+## The git source/branch for the B3LAB Safir Email Notifier
+safir_email_notifier_git_repo: https://github.com/b3lab/safir_email_notifier
+safir_email_notifier__git_install_branch: master
+
+## The git source/branch for the B3LAB Django Openstack Auth
+safir_django_openstack_auth_git_repo: https://github.com/b3lab/django_openstack_auth
+safir_django_openstack_auth_git_install_branch: master
 
 ## The git source/branch for the Magnum UI plugin
 magnum_dashboard_git_repo: https://git.openstack.org/openstack/magnum-ui
@@ -46,6 +62,10 @@ horizon_developer_constraints:
   - "git+{{ magnum_dashboard_git_repo }}@{{ magnum_dashboard_git_install_branch }}#egg=magnum-ui"
   - "git+{{ designate_dashboard_git_repo }}@{{ designate_dashboard_git_install_branch }}#egg=designate_dashboard"
   - "git+{{ trove_dashboard_git_repo }}@{{ trove_dashboard_git_install_branch }}#egg=trove_dashboard"
+  - "git+{{ safir_monitor_dashboard_git_repo }}@{{ safir_monitor_dashboard_git_install_branch }}#egg=monitor-dashboard"
+  - "git+{{ safir_openstack_user_manager_git_repo }}@{{ safir_openstack_user_manager_git_install_branch }}#egg=safir_openstack_user_manager"
+  - "git+{{ safir_email_notifier_git_repo }}@{{ safir_email_notifier__git_install_branch }}#egg=safir_email_notifier"
+  - "git+{{ safir_django_openstack_auth_git_repo }}@{{ safir_django_openstack_auth_git_install_branch }}#egg=django_openstack_auth"
 
 # Name of the virtual env to deploy into
 horizon_venv_tag: untagged
@@ -197,6 +217,9 @@ horizon_enable_trove_ui: False
 ## Designate UI Panel
 horizon_enable_designate_ui: False
 
+## Safir Monitor Dashboard Panel
+horizon_enable_safir_monitor_dashboard : True
+
 ## Neutron features to enable
 horizon_enable_neutron_lbaas: False
 horizon_enable_neutron_fwaas: False
@@ -270,7 +293,6 @@ horizon_requires_pip_packages:
 
 horizon_pip_packages:
   - django-appconf
-  - django-openstack-auth
   - greenlet
   - horizon
   - ironic-ui
@@ -287,6 +309,8 @@ horizon_pip_packages:
   - sahara_dashboard
   - trove_dashboard
   - designate_dashboard
+  - aodhclient
+  - gnocchiclient
 
 # This variable is used to install additional pip packages
 # that could be needed for additional dashboards
@@ -300,6 +324,28 @@ horizon_role_project_group: horizon_all
 
 # Set arbitrary horizon configuration options
 horizon_config_overrides: {}
+horizon_email_host: ''
+horizon_email_port:  587
+horizon_email_host_user: ''
+horizon_email_host_password: ''
+horizon_email_use_TLS:  True
+
+#Defining network settings on b3lab horizon
+openstack_ext_net: 'provider'
+openstack_dns_servers: ''
+openstack_default_subnet_cidr: '10.0.0.0/24'
+openstack_default_gateway_ip: '10.0.0.1'
+
+horizon_token_secret_key: 'secret'
+horizon_token_security_password_salt: 'secret'
+
+#please do not change this
+cloud_config_name: 'default'
+
+#AODH  action settings on b3lab safir monitor dashboard
+AODH_alarm_actions: 'None'
+AODH_ok_actions: 'None'
+
 
 horizon_keystone_admin_roles:
   - admin
