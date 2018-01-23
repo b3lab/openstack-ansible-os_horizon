@@ -25,12 +25,32 @@ horizon_pip_package_state: "latest"
 horizon_developer_mode: false
 
 ## The git source/branch for Horizon
-horizon_git_repo: https://git.openstack.org/openstack/horizon
-horizon_git_install_branch: stable/pike
+horizon_git_repo: https://github.com/b3lab/horizon.git
+horizon_git_install_branch: safir/pike
+
+## The git source/branch for the B3LAB Safir Monitor Dashboard plugin
+safir_monitor_dashboard_git_repo: https://github.com/b3lab/safir_monitor_dashboard.git
+safir_monitor_dashboard_git_install_branch: stable/pike
+
+## The git source/branch for the B3LAB Safir Openstack User Manager
+safir_openstack_user_manager_git_repo: https://github.com/b3lab/safir_openstack_user_manager
+safir_openstack_user_manager_git_install_branch: safir/pike
+
+## The git source/branch for the B3LAB Safir Email Notifier
+safir_email_notifier_git_repo: https://github.com/b3lab/safir_email_notifier
+safir_email_notifier__git_install_branch: master
+
+## The git source/branch for the B3LAB Django Openstack Auth
+safir_django_openstack_auth_git_repo: https://github.com/b3lab/django_openstack_auth
+safir_django_openstack_auth_git_install_branch: safir/pike
 
 ## The git source/branch for the Magnum UI plugin
-magnum_dashboard_git_repo: https://git.openstack.org/openstack/magnum-ui
+magnum_dashboard_git_repo: https://github.com/b3lab/magnum-ui
 magnum_dashboard_git_install_branch: stable/pike
+
+## The git source/branch for the Sahara UI plugin
+sahara_dashboard_git_repo: https://github.com/b3lab/sahara-dashboard
+sahara_dashboard_git_install_branch: stable/pike
 
 ## The git source/branch for the Designate UI plugin
 designate_dashboard_git_repo: https://git.openstack.org/openstack/designate-dashboard
@@ -44,8 +64,13 @@ trove_dashboard_git_install_branch: stable/pike
 horizon_developer_constraints:
   - "git+{{ horizon_git_repo }}@{{ horizon_git_install_branch }}#egg=horizon"
   - "git+{{ magnum_dashboard_git_repo }}@{{ magnum_dashboard_git_install_branch }}#egg=magnum-ui"
+  - "git+{{ sahara_dashboard_git_repo }}@{{ sahara_dashboard_git_install_branch }}#egg=sahara-dashboard"
   - "git+{{ designate_dashboard_git_repo }}@{{ designate_dashboard_git_install_branch }}#egg=designate_dashboard"
   - "git+{{ trove_dashboard_git_repo }}@{{ trove_dashboard_git_install_branch }}#egg=trove_dashboard"
+  - "git+{{ safir_monitor_dashboard_git_repo }}@{{ safir_monitor_dashboard_git_install_branch }}#egg=monitor-dashboard"
+  - "git+{{ safir_openstack_user_manager_git_repo }}@{{ safir_openstack_user_manager_git_install_branch }}#egg=safir_openstack_user_manager"
+  - "git+{{ safir_email_notifier_git_repo }}@{{ safir_email_notifier__git_install_branch }}#egg=safir_email_notifier"
+  - "git+{{ safir_django_openstack_auth_git_repo }}@{{ safir_django_openstack_auth_git_install_branch }}#egg=django_openstack_auth"
 
 # Name of the virtual env to deploy into
 horizon_venv_tag: untagged
@@ -210,6 +235,8 @@ horizon_enable_neutron_lbaas: False
 horizon_enable_neutron_fwaas: False
 horizon_enable_neutron_vpnaas: False
 
+## Safir Monitor  UI Panel
+horizon_enable_safir_monitor_dashboard : True
 ## Swift
 horizon_swift_file_transfer_chunk_size: 524288
 
@@ -277,13 +304,17 @@ horizon_requires_pip_packages:
   - httplib2
 
 horizon_pip_packages:
+  - git+{{ safir_monitor_dashboard_git_repo }}@{{ safir_monitor_dashboard_git_install_branch }}#egg=monitor-dashboard
+  - git+{{ safir_openstack_user_manager_git_repo }}@{{ safir_openstack_user_manager_git_install_branch }}#egg=safir_openstack_user_manager
+  - git+{{ safir_email_notifier_git_repo }}@{{ safir_email_notifier__git_install_branch }}#egg=safir_email_notifier
+  - git+{{ safir_django_openstack_auth_git_repo }}@{{ safir_django_openstack_auth_git_install_branch }}#egg=django_openstack_auth
   - cryptography
   - django-appconf
-  - django-openstack-auth
   - greenlet
-  - horizon
+  - git+{{ horizon_git_repo }}@{{ horizon_git_install_branch }}#egg=horizon
+  - git+{{ magnum_dashboard_git_repo }}@{{ magnum_dashboard_git_install_branch }}#egg=magnum-ui
+  - git+{{ sahara_dashboard_git_repo }}@{{ sahara_dashboard_git_install_branch }}#egg=sahara-dashboard
   - ironic-ui
-  - magnum-ui
   - keystonemiddleware
   - MySQL-python
   - PyMySQL
@@ -292,9 +323,11 @@ horizon_pip_packages:
   - ply
   - python-memcached
   - python-keystoneclient
-  - sahara_dashboard
   - trove_dashboard
   - designate_dashboard
+  - aodhclient
+  - gnocchiclient
+  - itsdangerous
 
 # This variable is used to install additional pip packages
 # that could be needed for additional dashboards
@@ -313,6 +346,28 @@ horizon_role_project_group: horizon_all
 
 # Set arbitrary horizon configuration options
 horizon_config_overrides: {}
+horizon_email_host: ''
+horizon_email_port:  587
+horizon_email_host_user: ''
+horizon_email_host_password: ''
+horizon_email_use_TLS:  True
+#Defining network settings on b3lab horizon
+openstack_ext_net: 'provider'
+openstack_dns_servers: '8.8.8.8'
+openstack_default_subnet_cidr: '10.0.0.0/24'
+openstack_default_gateway_ip: '10.0.0.1'
+horizon_token_secret_key: 'secret'
+horizon_token_security_password_salt: 'secret'
+
+#please do not change this
+cloud_config_name: 'default'
+#AODH  action settings on b3lab safir monitor dashboard
+AODH_alarm_actions: 'None'
+AODH_ok_actions: 'None'
+
+horizon_domain_url: {{ external_lb_vip_address }} + WEBROOT
+horizon_signup_url: WEBROOT + 'auth/register/'
+
 
 horizon_keystone_admin_roles:
   - admin

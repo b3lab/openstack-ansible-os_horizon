@@ -84,6 +84,8 @@
       path: "{{ horizon_lib_dir }}/openstack_dashboard/enabled/_1830_data_processing_plugins_panel.py"
     - src: "{{ horizon_lib_dir }}/sahara_dashboard/enabled/_1840_data_processing_jobs_panel.py"
       path: "{{ horizon_lib_dir }}/openstack_dashboard/enabled/_1840_data_processing_jobs_panel.py"
+    - src: "{{ horizon_lib_dir }}/sahara_dashboard/local_settings.d/_12_toggle_data_upload_max_number_fields.py"
+      path: "{{ horizon_lib_dir }}/openstack_dashboard/local/local_settings.d/_12_toggle_data_upload_max_number_fields.py"
 
 - name: Enable the trove-dashboard Horizon panel
   file:
@@ -111,6 +113,20 @@
     path: "{{ horizon_lib_dir }}/openstack_dashboard/local/enabled/_1481_project_ng_loadbalancersv2_panel.py"
     state: "{{ (horizon_enable_neutron_lbaas | bool) | ternary('link', 'absent') }}"
   notify: Restart apache2
+
+- name: Enable the safir-monitor-dashboard Horizon panel
+  file:
+    src: "{{ item.src }}"
+    path: "{{ item.path }}"
+    state: "{{ horizon_enable_safir_monitor_dashboard | ternary('link', 'absent') }}"
+  notify: Restart apache2
+  with_items:
+    - src: "{{ horizon_lib_dir }}/monitor_dashboard/enabled/_1071_project_compute_monitor_panel.py"
+      path: "{{ horizon_lib_dir }}/openstack_dashboard/enabled/_1071_project_compute_monitor_panel.py"
+    - src: "{{ horizon_lib_dir }}/monitor_dashboard/enabled/_2021_admin_hypervisor_monitor_panel.py"
+      path: "{{ horizon_lib_dir }}/openstack_dashboard/enabled/_2021_admin_hypervisor_monitor_panel.py"
+    - src: "{{ horizon_lib_dir }}/monitor_dashboard/enabled/_2022_admin_project_monitor_panel.py"
+      path: "{{ horizon_lib_dir }}/openstack_dashboard/enabled/_2022_admin_project_monitor_panel.py"
 
 - name: Create horizon links
   file:

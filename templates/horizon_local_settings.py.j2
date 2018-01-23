@@ -144,15 +144,34 @@ DATABASES = {
 }
 
 # Send email to the console by default
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # Or send them to /dev/null
 #EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'
 
 # Configure these for your outgoing email host
-#EMAIL_HOST = 'smtp.my-company.com'
-#EMAIL_PORT = 25
-#EMAIL_HOST_USER = 'djangomail'
-#EMAIL_HOST_PASSWORD = 'top-secret!'
+EMAIL_HOST = '{{ horizon_email_host }}'
+EMAIL_PORT = '{{ horizon_email_port }}'
+EMAIL_HOST_USER = '{{ horizon_email_host_user }}'
+EMAIL_HOST_PASSWORD = '{{ horizon_email_host_password }}'
+EMAIL_USE_TLS = '{{ horizon_email_use_TLS }}'
+
+# Defining network settings on b3lab horizon
+OPENSTACK_EXT_NET = '{{ openstack_ext_net }}'
+OPENSTACK_DNS_NAMESERVERS = '{{ openstack_dns_servers }}'
+OPENSTACK_DEFAULT_SUBNET_CIDR = '{{ openstack_default_subnet_cidr }}'
+OPENSTACK_DEFAULT_GATEWAY_IP = '{{ openstack_default_gateway_ip }}'
+
+TOKEN_SECRET_KEY = '{{ horizon_token_secret_key }}'
+TOKEN_SECURITY_PASSWORD_SALT = '{{ horizon_token_security_password_salt }}'
+
+CLOUD_CONFIG_NAME = '{{ cloud_config_name}}'
+
+#AODH  action settings on b3lab safir monitor dashboard
+AODH_ALARM_ACTIONS = '{{ AODH_alarm_actions }}'
+AODH_OK_ACTIONS = '{{ AODH_ok_actions }}'
+
+DOMAIN_URL = '{{ horizon_domain_url }}'
+SIGNUP_URL = '{{ horizon_signup_url }}'
 
 {% if horizon_available_regions is defined %}
 # For multiple regions uncomment this configuration, and add (endpoint, title).
