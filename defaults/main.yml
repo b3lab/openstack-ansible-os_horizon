@@ -40,9 +40,6 @@ safir_openstack_user_manager_git_install_branch: safir/pike
 safir_email_notifier_git_repo: https://github.com/b3lab/safir_email_notifier
 safir_email_notifier__git_install_branch: master
 
-## The git source/branch for the B3LAB Django Openstack Auth
-safir_django_openstack_auth_git_repo: https://github.com/b3lab/django_openstack_auth
-safir_django_openstack_auth_git_install_branch: safir/pike
 
 ## The git source/branch for the Magnum UI plugin
 magnum_dashboard_git_repo: https://github.com/b3lab/magnum-ui
@@ -70,7 +67,6 @@ horizon_developer_constraints:
   - "git+{{ safir_monitor_dashboard_git_repo }}@{{ safir_monitor_dashboard_git_install_branch }}#egg=monitor-dashboard"
   - "git+{{ safir_openstack_user_manager_git_repo }}@{{ safir_openstack_user_manager_git_install_branch }}#egg=safir_openstack_user_manager"
   - "git+{{ safir_email_notifier_git_repo }}@{{ safir_email_notifier__git_install_branch }}#egg=safir_email_notifier"
-  - "git+{{ safir_django_openstack_auth_git_repo }}@{{ safir_django_openstack_auth_git_install_branch }}#egg=django_openstack_auth"
 
 # Name of the virtual env to deploy into
 horizon_venv_tag: untagged
@@ -304,16 +300,16 @@ horizon_requires_pip_packages:
   - httplib2
 
 horizon_pip_packages:
-  - git+{{ safir_monitor_dashboard_git_repo }}@{{ safir_monitor_dashboard_git_install_branch }}#egg=monitor-dashboard
-  - git+{{ safir_openstack_user_manager_git_repo }}@{{ safir_openstack_user_manager_git_install_branch }}#egg=safir_openstack_user_manager
-  - git+{{ safir_email_notifier_git_repo }}@{{ safir_email_notifier__git_install_branch }}#egg=safir_email_notifier
-  - git+{{ safir_django_openstack_auth_git_repo }}@{{ safir_django_openstack_auth_git_install_branch }}#egg=django_openstack_auth
+  - git+https://github.com/b3lab/safir_monitor_dashboard.git@stable/pike#egg=monitor-dashboard
+  - git+https://github.com/b3lab/safir_openstack_user_manager@safir/pike#egg=safir_openstack_user_manager
+  - git+https://github.com/b3lab/safir_email_notifier@master#egg=safir_email_notifier
+  - git+https://github.com/b3lab/django_openstack_auth@safir/pike#egg=django_openstack_auth
   - cryptography
   - django-appconf
   - greenlet
-  - git+{{ horizon_git_repo }}@{{ horizon_git_install_branch }}#egg=horizon
-  - git+{{ magnum_dashboard_git_repo }}@{{ magnum_dashboard_git_install_branch }}#egg=magnum-ui
-  - git+{{ sahara_dashboard_git_repo }}@{{ sahara_dashboard_git_install_branch }}#egg=sahara-dashboard
+  - git+http://gokhan.isik:gokhan.isik@bitbucket.b3lab.org/scm/ba/horizon.git@safir/pike#egg=horizon
+  - git+https://github.com/b3lab/magnum-ui@stable/pike#egg=magnum-ui
+  - git+https://github.com/b3lab/sahara-dashboard@stable/pike#egg=sahara-dashboard
   - ironic-ui
   - keystonemiddleware
   - MySQL-python
@@ -327,7 +323,61 @@ horizon_pip_packages:
   - designate_dashboard
   - aodhclient
   - gnocchiclient
+  - python_cloudkittyclient
   - itsdangerous
+  - Pint>=0.5
+  - django-babel>=0.5.1 # BSD
+  - django-compressor>=2.0 # MIT
+  - django-pyscss>=2.0.2 # BSD License (2 clause)
+  - futurist!=0.15.0,>=0.11.0 # Apache-2.0
+  - iso8601>=0.1.11 # MIT
+  - netaddr!=0.7.16,>=0.7.13 # BSD
+  - oslo.concurrency>=3.8.0 # Apache-2.0
+  - oslo.i18n!=3.15.2,>=2.1.0 # Apache-2.0
+  - oslo.policy>=1.23.0 # Apache-2.0
+  - oslo.serialization!=2.19.1,>=1.10.0 # Apache-2.0
+  - oslo.utils>=3.20.0 # Apache-2.0
+  - osprofiler>=1.4.0 # Apache-2.0
+  - pymongo!=3.1,>=3.0.2 # Apache-2.0
+  - pyScss!=1.3.5,>=1.3.4 # MIT License
+  - python-cinderclient>=3.1.0 # Apache-2.0
+  - python-glanceclient>=2.8.0 # Apache-2.0
+  - python-heatclient>=1.6.1 # Apache-2.0
+  - python-neutronclient>=6.3.0 # Apache-2.0
+  - python-novaclient>=9.0.0 # Apache-2.0
+  - python-swiftclient>=3.2.0 # Apache-2.0
+  - pytz>=2013.6 # MIT
+  - PyYAML>=3.10.0 # MIT
+  - semantic-version>=2.3.1 # BSD
+  - six>=1.9.0 # MIT
+  - XStatic>=1.0.0 # MIT License
+  - XStatic-Angular>=1.5.8.0 # MIT License
+  - XStatic-Angular-Bootstrap>=2.2.0.0 # MIT License
+  - XStatic-Angular-FileUpload>=12.0.4.0 # MIT License
+  - XStatic-Angular-Gettext>=2.3.8.0 # MIT License
+  - XStatic-Angular-lrdragndrop>=1.0.2.2 # MIT License
+  - XStatic-Angular-Schema-Form>=0.8.13.0 # MIT
+  - XStatic-Bootstrap-Datepicker>=1.3.1.0 # Apache 2.0 License
+  - XStatic-Bootstrap-SCSS>=3.3.7.1 # Apache 2.0 License
+  - XStatic-bootswatch>=3.3.7.0 # MIT License
+  - XStatic-D3>=3.5.17.0 # BSD License (3 clause)
+  - XStatic-Hogan>=2.0.0.2 # Apache 2.0 License
+  - XStatic-Font-Awesome>=4.7.0 # SIL OFL 1.1 License, MIT License
+  - XStatic-Jasmine>=2.4.1.1 # MIT License
+  - XStatic-jQuery>=1.8.2.1 # MIT License
+  - XStatic-JQuery-Migrate>=1.2.1.1 # MIT License
+  - XStatic-JQuery.quicksearch>=2.0.3.1 # MIT License
+  - XStatic-JQuery.TableSorter>=2.14.5.1 # MIT License
+  - XStatic-jquery-ui>=1.10.4.1 # MIT License
+  - XStatic-JSEncrypt>=2.3.1.1 # MIT License
+  - XStatic-mdi>=1.4.57.0 # SIL OPEN FONT LICENSE Version 1.1
+  - XStatic-objectpath>=1.2.1.0 # MIT
+  - XStatic-Rickshaw>=1.5.0.0 # BSD License (prior)
+  - XStatic-roboto-fontface>=0.5.0.0 # Apache 2.0 License
+  - XStatic-smart-table>=1.4.13.2 # MIT License
+  - XStatic-Spin>=1.2.5.2 # MIT License
+  - XStatic-term.js>=0.0.7.0 # MIT License
+  - XStatic-tv4>=1.2.7.0 # MI
 
 # This variable is used to install additional pip packages
 # that could be needed for additional dashboards
