@@ -307,7 +307,7 @@ horizon_pip_packages:
   - cryptography
   - django-appconf
   - greenlet
-  - git+http://gokhan.isik:gokhan.isik@bitbucket.b3lab.org/scm/ba/horizon.git@safir/pike#egg=horizon
+  - git+https://github.com/b3lab/horizon.git@safir/pike#egg=horizon
   - git+https://github.com/b3lab/magnum-ui@stable/pike#egg=magnum-ui
   - git+https://github.com/b3lab/sahara-dashboard@stable/pike#egg=sahara-dashboard
   - ironic-ui
